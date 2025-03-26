@@ -1,23 +1,15 @@
-from flask import Flask,jsonify,request
-from pymongo import MongoClient
-from database.operateFunction import execuFunction
+#这个函数可以去用来专门的去给出反应
+from typing import Optional, Tuple
 
-app = Flask(__name__)
+from flask import Flask, request, jsonify, Response
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    # 获取请求数据（假设是 JSON 格式）
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
-    return "11111111111"
-
-@app.route('/insertData', methods=['POST'])
-def insert_data():
-    data = request.get_json()
-    print(data.get('tableName'),'------------',data.get('insertList'))
-    result = execuFunction().addData(dbName=data.get('tableName'), insertData=data.get('insertList'))
-    return jsonify({'status': 'success', 'message': '数据已插入！', 'result': result}), 200
-
-if __name__ == '__main__':
-    app.run()
+def create_response(status_code: int, message: str, success: bool, data: Optional[dict] = None) -> tuple[Response, int]:
+    """生成标准化的 JSON 响应"""
+    response = {
+        "status_code": status_code,
+        "message": message,
+        "success": success
+    }
+    if data:
+        response["data"] = data
+    return jsonify(response), status_code
