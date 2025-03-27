@@ -50,4 +50,4 @@ if __name__ == '__main__':
 }
     print(data["tableName"],'--------------',data['insertList'])
 
-    print(execuFunction().addData(dbName=data["tableName"],insertData=data["insertList"]))
+    print(execuFunction().add_data(dbName=data["tableName"],insertData=data["insertList"]))

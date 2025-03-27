@@ -6,7 +6,6 @@ import jwt
 import bcrypt
 from http import HTTPStatus
 
-
 SECRET_KEY = "your-secret-key-here"  # 请使用安全的密钥，建议从环境变量读取
 JWT_ALGORITHM = "HS256"
 TOKEN_EXPIRATION = 30  # token 有效期（分钟）
