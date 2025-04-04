@@ -12,7 +12,7 @@ class execuFunction():
     def add_data(self, dbName, insertData):
         try:
             result = self.client[dbName].insert_many(insertData)
-                                                                    # 最后一个参数存在问题
+                                                           # 最后一个参数存在问题
             return create_response(CODE_SUCCESS, result.inserted_ids,CODE_SUCCESS)
         except Exception as e:
             return create_response(CODE_ERROR, str(e), success=False)
@@ -23,4 +23,15 @@ class execuFunction():
         except Exception as e:
             return create_response(CODE_ERROR, str(e), success=False)
 
+    # 更新那个用户使用的token以及密码
+    def update_user_token(self, dbName, username, new_token):
+        try:
+            result = self.client[dbName]['users'].update_one(
+                {"username": username},
+                {"$set": {"token": new_token}}
+            )
+            return {"success": result.modified_count > 0,
+                    "message": "Token 更新成功" if result.modified_count > 0 else f"未找到用户 {username}"}
+        except Exception as e:
+            return {"success": False, "message": f"更新失败: {str(e)}"}
 

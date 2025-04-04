@@ -2,7 +2,6 @@ from bson import ObjectId
 
 from otherFunctions.create_response import create_response
 from flask import Flask, request, jsonify, Response
-from secuty import generate_jwt_token,verify_jwt_token
 from typing import Optional, Tuple
 from functions.userLogin import LoginFunction as checkLogin
 import bcrypt
