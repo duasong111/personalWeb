@@ -31,8 +31,8 @@ def updateDate():
 
 
 if __name__ == '__main__':
-    result = updateDate()  # 直接调用函数
-    print(result)
+    result = queryData()  # 直接调用函数
+    # print(result)
 
     # 插入输入测试
 #     data = {
@@ -45,6 +45,7 @@ if __name__ == '__main__':
 #             "email": "blogger123@example.com",
 #             "password": "$2b$10$hashedPasswordHere",
 #             "fullName": "张三",
+#             "salt": "b6326d2a69d00a69d6b7037197db3d6f",
 #             "profilePicture": "https://example.com/images/blogger123.jpg",
 #             "bio": "热爱写作的技术博主",
 #             "role": "user",
@@ -65,5 +66,5 @@ if __name__ == '__main__':
 #     ]
 # }
 #     print(data["tableName"],'--------------',data['insertList'])
-#
+# #
 #     print(execuFunction().add_data(dbName=data["tableName"],insertData=data["insertList"]))

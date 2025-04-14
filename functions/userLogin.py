@@ -21,6 +21,11 @@ class LoginFunction():
             # 查询用户-首先先去实例化一下
             dbFunction = execuFunction()
             queryResult = dbFunction.query_individual_users(dbName='users',queryParams="username",queryData=username)
+
+            if queryResult['username'] != username or queryResult['password'] != password:
+                return create_response(HTTPStatus.BAD_REQUEST, "用户名或密码错误，请重新输入", False)
+
+
             new_token = secrets.token_hex(16)  # 生成一个 32 字符的随机十六进制 token
 
             # 3. 更新数据库中的 token
@@ -28,6 +33,12 @@ class LoginFunction():
             print("查看更新的情况:",update_result)
 
             return create_response(HTTPStatus.OK, "登录成功", True)
+
+        # def query_individual_users(self, dbName, queryParams, queryData):
+        #     try:
+        #         return self.client[dbName].find_one({queryParams: queryData})
+        #     except Exception as e:
+        #         return create_response(CODE_ERROR, str(e), success=False)
 
         except Exception as e:
             return create_response(HTTPStatus.INTERNAL_SERVER_ERROR, f"服务器错误: {str(e)}", False)
