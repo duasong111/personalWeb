@@ -24,14 +24,22 @@ class execuFunction():
             return create_response(CODE_ERROR, str(e), success=False)
 
     # 更新那个用户使用的token以及密码
-    def update_user_token(self, dbName, username, new_token):
+    def update_user_key_value(self, db_name, key_value,username, new_data, key_type):
         try:
-            result = self.client[dbName]['users'].update_one(
-                {"username": username},
-                {"$set": {"token": new_token}}
+            result = self.client[db_name].update_one(
+                {key_value: username},
+                {"$set": {key_type: new_data}}
             )
-            return {"success": result.modified_count > 0,
-                    "message": "Token 更新成功" if result.modified_count > 0 else f"未找到用户 {username}"}
+            return {
+                "success": result.matched_count > 0,
+                "message": f"{key_type} 更新成功" if result.matched_count > 0 else f"未找到用户 {username}"
+            }
         except Exception as e:
             return {"success": False, "message": f"更新失败: {str(e)}"}
+
+
+
+
+
+
 

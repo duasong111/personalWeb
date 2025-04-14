@@ -16,11 +16,8 @@ def loginEncryption(password):
 
 
 def verifyPassword(input_password, stored_encrypted_password, stored_salt):
-    # 使用相同的盐值对输入的密码进行加密
     combined = input_password.encode('utf-8') + stored_salt + securityCode.encode('utf-8')
     sha256_hash = hashlib.sha256(combined).hexdigest()
-
-    # 比较加密后的结果
     return sha256_hash == stored_encrypted_password
 
 
