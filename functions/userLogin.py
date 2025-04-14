@@ -41,20 +41,16 @@ class LoginFunction:
                 new_data=new_token,
                 key_type='token'
             )
-            print(f"Token update result: {update_result}")
             # 更新 lastLogin
             update_time_result = db_function.update_user_key_value(
                 db_name='users',
                 username=username,
-                key_value='lastLogin',
+                key_value='username',
                 new_data=datetime.now(),
-                key_type = 'lastLogin'
+                key_type='lastLogin'
             )
-            # print(f"Last login update result: {update_time_result}")
-
-            # 7. 检查更新是否成功
-            # if not update_result.get('success', False):
-            #     return create_response(HTTPStatus.INTERNAL_SERVER_ERROR, "无法更新用户 token", False)
+            if not update_result.get('success', False):
+                return create_response(HTTPStatus.INTERNAL_SERVER_ERROR, "无法更新用户 token", False)
 
             # 8. 返回成功响应，包含 token
             return create_response(
@@ -63,7 +59,6 @@ class LoginFunction:
                 True,
                 data={"token": new_token}
             )
-
         except ValueError as ve:
             return create_response(HTTPStatus.BAD_REQUEST, f"输入错误: {str(ve)}", False)
         except Exception as e:
