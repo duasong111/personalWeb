@@ -13,7 +13,6 @@ class execuFunction():
     def add_data(self, dbName, insertData):
         try:
             result = self.client[dbName].insert_many(insertData)
-                                                           # 最后一个参数存在问题
             return create_response(CODE_SUCCESS, result.inserted_ids,CODE_SUCCESS)
         except Exception as e:
             return create_response(CODE_ERROR, str(e), success=False)
@@ -37,8 +36,7 @@ class execuFunction():
             # 执行数据库操作
             result = self.client[db_name].update_one(
                 {key_value: username},  # 使用用户名作为查询条件
-                {"$set": {key_type: new_data}}
-            )
+                {"$set": {key_type: new_data}})
             return {
                 "success": result.matched_count > 0,
                 "message": f"{key_type} 更新成功" if result.matched_count > 0 else f"未找到用户 {username}"

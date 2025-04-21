@@ -3,24 +3,28 @@ from otherFunctions.create_response import create_response
 from flask import Flask, request, jsonify, Response
 from typing import Optional, Tuple
 from functions.userLogin import LoginFunction
+from flask_cors import CORS
 import bcrypt
 from http import HTTPStatus
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 checkLogin = LoginFunction()
 @app.route("/login", methods=["POST"],strict_slashes=False)
 def login():
     try:
         data = request.get_json()  # 解析 JSON 数据
-        user = data.get('user')
-        pwd = data.get('pwd')
+        user = data.get('username')
+        pwd = data.get('password')
         return checkLogin.checklogin(user,pwd)
     except Exception as e:
         return create_response(HTTPStatus.INTERNAL_SERVER_ERROR, f"服务器错误: {str(e)}", False)
 
-
 @app.route("/", methods=["GET"])
 def index():
         return "success"
+
+
+# 写一个自动获取github和gitee更新数量的脚本，然后能够不断地去展现出来数据
 
 
 

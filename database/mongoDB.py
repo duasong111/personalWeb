@@ -1,4 +1,3 @@
-
 # 该文件是去了将连接数据库暴露出去
 
 from pymongo import MongoClient
