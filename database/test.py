@@ -3,7 +3,7 @@ import secrets
 
 from bson import ObjectId
 from datetime import datetime
-from operateFunction import execuFunction
+from database.operateFunction import execuFunction
 from database.operateFunction import execuFunction as dbFunction
 import hashlib
 # 用户的密码使用md5进行加密
@@ -25,13 +25,12 @@ def queryData():
 def updateDate():
     dbDate = execuFunction()
     new_token = secrets.token_hex(16)
-    print("new_token",new_token)
     queryResult = dbDate.update_user_token(dbName='users', username="duasong", new_token=new_token)
     return queryResult
 
 
 if __name__ == '__main__':
-    result = queryData()  # 直接调用函数
+    # result = queryData()
     # print(result)
 
     # 插入输入测试
@@ -65,6 +64,20 @@ if __name__ == '__main__':
 #         }
 #     ]
 # }
-#     print(data["tableName"],'--------------',data['insertList'])
+
+    data = {
+        "tableName":"skill_manage",
+        "insertList":[
+            {
+             "value": 1000,
+             "name" : "Python后端",
+             "title" : "Django Flask FastApi + 爬虫",
+             "memo" : "备注信息",
+             "createdAt" : ISODate("2025-03-26T10:00:00Z"),
+              "updatedAt": ISODate("2025-03-26T12:00:00Z"),
+            }
+        ]
+    }
+    # print(data["tableName"],'--------------',data['insertList'])
 # #
-#     print(execuFunction().add_data(dbName=data["tableName"],insertData=data["insertList"]))
+    print(execuFunction().add_data(dbName=data["tableName"],insertData=data["insertList"]))
