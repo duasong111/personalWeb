@@ -1,5 +1,6 @@
+import socketio
 from bson import ObjectId
-
+from flask_socketio import SocketIO, emit
 from database.test import ISODate
 from otherFunctions.create_response import create_response
 from flask import Flask, request, jsonify, Response
@@ -31,7 +32,18 @@ def define_pie():
     except Exception as e:
         return create_response(HTTPStatus.INTERNAL_SERVER_ERROR, f"服务器错误: {str(e)}", False)
 
+def handle_connect():
+    print('Client connected')
+    emit('message', {'data': 'Connected to server'})
 
+def handle_disconnect():
+    print('Client disconnected')
+
+# WebSocket 事件：处理客户端发送的消息
+def handle_message(data):
+    print(f'Received message: {data}')
+    # 向客户端广播消息
+    emit('server_response', {'data': f'Server received: {data}'}, broadcast=True)
 # 通过这个区进行添加表
 @app.route("/add_table",methods=["GET"])
 def add_table():
