@@ -1,13 +1,10 @@
-import socketio
-from bson import ObjectId
-from flask_socketio import SocketIO, emit
+from flask_socketio import emit
 from database.test import ISODate
 from otherFunctions.create_response import create_response
-from flask import Flask, request, jsonify, Response
+from flask import Flask, request
 from functions.userLogin import LoginFunction
 from database.operateFunction import execuFunction
 from flask_cors import CORS
-import bcrypt
 from http import HTTPStatus
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
